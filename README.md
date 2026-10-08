@@ -61,3 +61,7 @@ npm run test:browser
 ## 本地设计工作台
 
 根 `index.html` 和 `output/` 保留为本地设计资料，不进入网站构建与公开提交。原始工作台说明保存在本地 `output/design-workbench-readme.md`，从根目录 `index.html` 打开图库。
+
+## Iris Studio 工作台
+
+实际 Agent 工作台位于 [studio/](studio/README.md)，使用独立 React 前端与 Python 宿主。启动、配置、真实观察与只读展示包见该目录说明；本仓库根命令仍服务官网。

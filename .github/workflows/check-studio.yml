@@ -1,0 +1,55 @@
+name: Check Studio
+
+on:
+  pull_request:
+    paths:
+      - 'studio/**'
+      - '.github/workflows/check-studio.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: studio-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: iris-web
+      - uses: actions/checkout@v6
+        with:
+          repository: Tsubaki-01/Iris
+          ref: c8a2185ba96753f0ff5a0dbb3eaeae0264ef78fe
+          path: Iris
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: iris-web/studio/frontend/package-lock.json
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: '3.12'
+      - name: Backend integration and contracts
+        working-directory: iris-web/studio/backend
+        run: |
+          uv sync --locked
+          uv run ruff check src tests scripts
+          uv run pytest -p no:cacheprovider
+          uv run python scripts/export_contracts.py
+      - name: Frontend contracts, interaction tests and build
+        working-directory: iris-web/studio/frontend
+        run: |
+          npm ci
+          npm run contracts:generate
+          npm run typecheck
+          npm test
+          npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iris-studio-web
+          path: iris-web/studio/frontend/dist
