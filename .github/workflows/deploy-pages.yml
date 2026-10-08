@@ -45,6 +45,9 @@ jobs:
     needs: version
     if: needs.version.outputs.available == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v6
         with:
