@@ -45,11 +45,13 @@ npm run test:browser
 
 `check-site.yml` 对网站 PR 使用 Iris/master 生成开发预览并检查主要流程，不部署。
 
-`deploy-pages.yml` 在网站 master 的工程变更、Iris 发版通知或手动运行时，解析 latest 正式 Release，检出该标签并固定提交，构建后发布 Pages。无正式 Release 时明确跳过部署，普通 Iris 文档合并不会更新线上版本。
+`deploy-pages.yml` 在网站 master 的工程变更、Iris 发版通知或手动运行时，解析 latest 正式 Release，检出该标签并固定提交，构建后发布 Pages。若 `.github/docs-revisions.json` 为该版本指定了文档修订提交，则检出该提交，保留原版本号。无正式 Release 时明确跳过部署，普通 Iris 文档合并不会更新线上版本。
+
+同版本文档勘误从对应 Release 标签创建修订分支，只提交文档修正，再将提交填入 `.github/docs-revisions.json` 并重建。首页、正文与复制内容仍从同一套文档生成，源码链接对应实际构建提交。
 
 首次上线需要：
 
-1. 将 Iris 导航与文档接入改动合并到维护分支，并为首个真实 Release 固定安装标签。
+1. 将 Iris 导航与文档接入改动合并到维护分支。安装命令统一使用 `git clone https://github.com/Tsubaki-01/Iris.git`。
 2. 将网站工程推送到公开的 iris-web 仓库，在 Pages 中选择 GitHub Actions。
 3. 在 Iris 配置 `IRIS_WEB_DISPATCH_TOKEN`，使用可访问 iris-web 且具备 Contents write 的 fine-grained PAT；Iris 的发版工作流用它发送通知。
 4. 发布正式 Release 并设为 latest，检查 Actions 与线上页面。项目路径为 `/iris-web/`，实际地址以 Pages 返回值为准。

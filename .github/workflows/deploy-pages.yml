@@ -8,6 +8,7 @@ on:
       - 'scripts/**'
       - 'package*.json'
       - '.node-version'
+      - '.github/docs-revisions.json'
       - '.github/workflows/deploy-pages.yml'
   repository_dispatch:
     types: [iris-release]
@@ -52,10 +53,21 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: master
+      - name: Resolve documentation revision
+        id: docs
+        env:
+          IRIS_VERSION: ${{ needs.version.outputs.tag }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const revisions = JSON.parse(readFileSync('.github/docs-revisions.json', 'utf8'));
+          const ref = revisions[process.env.IRIS_VERSION] || process.env.IRIS_VERSION;
+          appendFileSync(process.env.GITHUB_OUTPUT, `ref=${ref}\n`);
+          NODE
       - uses: actions/checkout@v6
         with:
           repository: Tsubaki-01/Iris
-          ref: ${{ needs.version.outputs.tag }}
+          ref: ${{ steps.docs.outputs.ref }}
           path: .cache/iris
       - uses: actions/setup-node@v6
         with:

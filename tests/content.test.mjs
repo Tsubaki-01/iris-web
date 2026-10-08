@@ -12,7 +12,7 @@ const sourceRoot = join(fixture, 'source');
 const siteRoot = join(fixture, 'site');
 const commit = '0123456789abcdef0123456789abcdef01234567';
 const snippet = (name, language, code) => `<!-- iris-web:${name}:start -->\n\`\`\`${language}\n${code}\n\`\`\`\n<!-- iris-web:${name}:end -->`;
-const quickstart = '# 首次运行\n\n' + [snippet('install', 'sh', 'git clone --branch v0.1.0 https://github.com/Tsubaki-01/Iris.git\ncd Iris\nuv sync'), snippet('minimal-agent', 'yaml', 'name: first-agent'), snippet('run', 'sh', 'uv run iris chat agent.yaml')].join('\n\n');
+const quickstart = '# 首次运行\n\n' + [snippet('install', 'sh', 'git clone https://github.com/Tsubaki-01/Iris.git\ncd Iris\nuv sync'), snippet('minimal-agent', 'yaml', 'name: first-agent'), snippet('run', 'sh', 'uv run iris chat agent.yaml')].join('\n\n');
 await mkdir(join(sourceRoot, 'docs/getting-started'), { recursive: true });
 await mkdir(join(sourceRoot, 'src/iris'), { recursive: true });
 await mkdir(join(sourceRoot, 'evals'), { recursive: true });
@@ -30,7 +30,7 @@ test('导入保留源文档，首页代码与导航使用同一来源', async ()
   assert.equal(await readFile(join(sourceRoot, 'docs/getting-started/quickstart.md'), 'utf8'), quickstart);
   assert.equal(await readFile(join(siteRoot, 'docs/getting-started/quickstart.md'), 'utf8'), quickstart);
   const snippets = JSON.parse(await readFile(join(siteRoot, '.generated/home-snippets.json'), 'utf8'));
-  assert.equal(snippets.install, 'git clone --branch v0.1.0 https://github.com/Tsubaki-01/Iris.git\ncd Iris\nuv sync');
+  assert.equal(snippets.install, 'git clone https://github.com/Tsubaki-01/Iris.git\ncd Iris\nuv sync');
   const navigation = JSON.parse(await readFile(join(siteRoot, '.generated/navigation.json'), 'utf8'));
   assert.deepEqual(navigation[0].items, [{ text: 'Iris 文档', link: '/docs/' }, { text: '快速开始', link: '/docs/getting-started/quickstart.html' }]);
 });
