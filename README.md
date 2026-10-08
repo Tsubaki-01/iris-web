@@ -2,6 +2,8 @@
 
 VitePress 网站工程位于 `site/`，首页沿用 Iris 的植物学视觉设计，文档直接读取 [Iris](https://github.com/Tsubaki-01/Iris) 仓库中的 Markdown。正式站点通过 GitHub Pages 发布，正文对应 GitHub latest 正式 Release。
 
+[访问官网](https://tsubaki-01.github.io/iris-web/) · [快速开始](https://tsubaki-01.github.io/iris-web/docs/getting-started/quickstart.html)
+
 ## 本地开发
 
 使用 `.node-version` 指定的 Node 24。将 Iris 仓库放在相邻目录，其文档需要包含 `docs/navigation.json` 和快速开始中的首页代码标记。

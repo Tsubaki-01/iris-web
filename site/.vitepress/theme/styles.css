@@ -166,6 +166,8 @@ a, button { -webkit-tap-highlight-color: transparent; }
 }
 @media (min-width: 1440px) {
   :root { --vp-sidebar-width: max(344px, calc((100vw - 1632px) / 2 + 304px)); }
+  .VPSidebar { width: var(--vp-sidebar-width) !important; }
+  .VPContent.has-sidebar { padding-left: var(--vp-sidebar-width) !important; padding-right: 0 !important; }
   .VPSidebar { padding-left: max(40px, calc((100vw - 1632px) / 2)) !important; padding-right: 0 !important; }
   .VPSidebar .nav { width: 260px; }
   .VPDoc.has-sidebar { padding-left: 44px; padding-right: max(40px, calc((100vw - 1632px) / 2)); }
