@@ -1,0 +1,37 @@
+[project]
+name = "iris-studio"
+version = "0.1.0"
+description = "Iris 本地 Agent 工作台"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.142.4",
+    "iris",
+    "opentelemetry-sdk>=1.45.1",
+    "python-multipart>=0.0.32",
+    "pyyaml>=6.0.3",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+
+[tool.uv.sources]
+iris = { path = "../../../Iris", editable = true }
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.10",
+]
+
+[project.scripts]
+iris-studio = 'iris_studio.__main__:main'

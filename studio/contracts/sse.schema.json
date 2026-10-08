@@ -1,0 +1,6571 @@
+{
+  "$defs": {
+    "ActivationAbandonedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "activation.abandoned",
+          "default": "activation.abandoned",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ActivationAbandonedEnvelope",
+      "type": "object"
+    },
+    "ActivationStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "activation.started",
+          "default": "activation.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ActivationStartedEnvelope",
+      "type": "object"
+    },
+    "AgentRunOptions": {
+      "additionalProperties": false,
+      "description": "Logical run 的完整固定选项。",
+      "properties": {
+        "limits": {
+          "$ref": "#/$defs/RunLimits"
+        },
+        "runtime": {
+          "$ref": "#/$defs/RuntimeExecutionOptions"
+        }
+      },
+      "title": "AgentRunOptions",
+      "type": "object"
+    },
+    "CleanupError": {
+      "additionalProperties": false,
+      "description": "命令清理失败的真实来源。",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "source",
+        "message"
+      ],
+      "title": "CleanupError",
+      "type": "object"
+    },
+    "CleanupPayload": {
+      "additionalProperties": false,
+      "description": "命令清理失败不伪装终态。",
+      "properties": {
+        "error": {
+          "$ref": "#/$defs/CleanupError"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "title": "CleanupPayload",
+      "type": "object"
+    },
+    "CommandCleanupFailedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "command.cleanup.failed",
+          "default": "command.cleanup.failed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/CleanupPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "CommandCleanupFailedEnvelope",
+      "type": "object"
+    },
+    "ConfigurationAppliedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "configuration.applied",
+          "default": "configuration.applied",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ConfigurationPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ConfigurationAppliedEnvelope",
+      "type": "object"
+    },
+    "ConfigurationPayload": {
+      "additionalProperties": false,
+      "description": "完整配置事实的索引。",
+      "properties": {
+        "configuration_snapshot_id": {
+          "title": "Configuration Snapshot Id",
+          "type": "string"
+        },
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "configuration_snapshot_id",
+        "agent_id"
+      ],
+      "title": "ConfigurationPayload",
+      "type": "object"
+    },
+    "ContextCompactedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "context.compacted",
+          "default": "context.compacted",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ContextCompactedEnvelope",
+      "type": "object"
+    },
+    "ContextCompactionCompletedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "context.compaction.completed",
+          "default": "context.compaction.completed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/StepPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ContextCompactionCompletedEnvelope",
+      "type": "object"
+    },
+    "ContextCompactionFailedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "context.compaction.failed",
+          "default": "context.compaction.failed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/StepPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ContextCompactionFailedEnvelope",
+      "type": "object"
+    },
+    "ContextCompactionStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "context.compaction.started",
+          "default": "context.compaction.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/StepPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ContextCompactionStartedEnvelope",
+      "type": "object"
+    },
+    "ContextPreparationEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "context.preparation",
+          "default": "context.preparation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/PreparationPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ContextPreparationEnvelope",
+      "type": "object"
+    },
+    "ControlPayload": {
+      "additionalProperties": false,
+      "description": "完整控制快照通知。",
+      "properties": {
+        "snapshot": {
+          "$ref": "#/$defs/SessionControlSnapshot"
+        }
+      },
+      "required": [
+        "snapshot"
+      ],
+      "title": "ControlPayload",
+      "type": "object"
+    },
+    "DurableEventPayload": {
+      "additionalProperties": false,
+      "description": "持久事件的公开轻量字段。",
+      "properties": {
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "step_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Index"
+        },
+        "correlation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correlation Id"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "stop_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Reason"
+        }
+      },
+      "required": [
+        "occurred_at"
+      ],
+      "title": "DurableEventPayload",
+      "type": "object"
+    },
+    "GoalChangedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "goal.changed",
+          "default": "goal.changed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/GoalPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "GoalChangedEnvelope",
+      "type": "object"
+    },
+    "GoalPayload": {
+      "additionalProperties": false,
+      "description": "真实目标状态通知。",
+      "properties": {
+        "view": {
+          "$ref": "#/$defs/GoalView"
+        }
+      },
+      "required": [
+        "view"
+      ],
+      "title": "GoalPayload",
+      "type": "object"
+    },
+    "GoalReason": {
+      "additionalProperties": false,
+      "description": "供宿主解释状态变化的稳定原因码与正文。",
+      "properties": {
+        "code": {
+          "pattern": "\\S",
+          "title": "Code",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "text"
+      ],
+      "title": "GoalReason",
+      "type": "object"
+    },
+    "GoalSnapshot": {
+      "additionalProperties": false,
+      "description": "目标权威快照；不复制 Run 状态、使用量或进程 armed 标记。",
+      "properties": {
+        "goal_id": {
+          "pattern": "\\S",
+          "title": "Goal Id",
+          "type": "string"
+        },
+        "session_id": {
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "objective": {
+          "pattern": "\\S",
+          "title": "Objective",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/GoalStatus"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GoalReason"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "max_rounds": {
+          "exclusiveMinimum": 0,
+          "title": "Max Rounds",
+          "type": "integer"
+        },
+        "rounds_started": {
+          "minimum": 0,
+          "title": "Rounds Started",
+          "type": "integer"
+        },
+        "run_options": {
+          "$ref": "#/$defs/AgentRunOptions"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "goal_id",
+        "session_id",
+        "revision",
+        "objective",
+        "status",
+        "max_rounds",
+        "rounds_started",
+        "run_options",
+        "created_at",
+        "updated_at"
+      ],
+      "title": "GoalSnapshot",
+      "type": "object"
+    },
+    "GoalStatus": {
+      "description": "目标的四种持久业务状态。",
+      "enum": [
+        "active",
+        "paused",
+        "blocked",
+        "completed"
+      ],
+      "title": "GoalStatus",
+      "type": "string"
+    },
+    "GoalView": {
+      "description": "持久事实与进程状态的统一只读投影。",
+      "properties": {
+        "goal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GoalSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "armed": {
+          "title": "Armed",
+          "type": "boolean"
+        },
+        "run": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_goal_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Run Goal Id"
+        },
+        "interaction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HumanInteraction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settlement_pending": {
+          "title": "Settlement Pending",
+          "type": "boolean"
+        },
+        "driver_error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunErrorInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "goal",
+        "armed",
+        "run",
+        "run_goal_id",
+        "interaction",
+        "settlement_pending",
+        "driver_error"
+      ],
+      "title": "GoalView",
+      "type": "object"
+    },
+    "HumanInteraction": {
+      "additionalProperties": false,
+      "description": "持久化的一次人工 gate 与 response/close 状态。",
+      "properties": {
+        "interaction_id": {
+          "title": "Interaction Id",
+          "type": "string"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "step_index": {
+          "minimum": 0,
+          "title": "Step Index",
+          "type": "integer"
+        },
+        "tool_call_id": {
+          "title": "Tool Call Id",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/InteractionStatus",
+          "default": "pending"
+        },
+        "request": {
+          "$ref": "#/$defs/HumanInteractionRequest"
+        },
+        "response": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "permission": "#/$defs/PermissionInteractionResponse",
+                  "question": "#/$defs/QuestionInteractionResponse"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/PermissionInteractionResponse"
+                },
+                {
+                  "$ref": "#/$defs/QuestionInteractionResponse"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Response"
+        },
+        "version": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        },
+        "resolved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolved At"
+        },
+        "closed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Closed At"
+        },
+        "close_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Close Reason"
+        }
+      },
+      "required": [
+        "session_id",
+        "run_id",
+        "step_index",
+        "tool_call_id",
+        "request"
+      ],
+      "title": "HumanInteraction",
+      "type": "object"
+    },
+    "HumanInteractionRequest": {
+      "additionalProperties": false,
+      "description": "所有人工 gate 共用的工具调用与提示信封。",
+      "properties": {
+        "tool_call": {
+          "$ref": "#/$defs/ToolCallSnapshot"
+        },
+        "prompt": {
+          "discriminator": {
+            "mapping": {
+              "permission": "#/$defs/PermissionPrompt",
+              "question": "#/$defs/QuestionPrompt"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PermissionPrompt"
+            },
+            {
+              "$ref": "#/$defs/QuestionPrompt"
+            }
+          ],
+          "title": "Prompt"
+        },
+        "subagent_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SubagentProxyOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "tool_call",
+        "prompt"
+      ],
+      "title": "HumanInteractionRequest",
+      "type": "object"
+    },
+    "ImageBlock": {
+      "description": "图片的原始副本与模型副本引用，不携带请求编码。",
+      "properties": {
+        "type": {
+          "const": "image",
+          "default": "image",
+          "title": "Type",
+          "type": "string"
+        },
+        "original": {
+          "$ref": "#/$defs/ImageFileRef"
+        },
+        "model": {
+          "$ref": "#/$defs/ImageFileRef"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        }
+      },
+      "required": [
+        "original",
+        "model"
+      ],
+      "title": "ImageBlock",
+      "type": "object"
+    },
+    "ImageFileRef": {
+      "description": "已保存图片的绝对路径、实际编码格式和像素尺寸。",
+      "properties": {
+        "path": {
+          "format": "path",
+          "title": "Path",
+          "type": "string"
+        },
+        "mime_type": {
+          "title": "Mime Type",
+          "type": "string"
+        },
+        "width": {
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "title": "Height",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "mime_type",
+        "width",
+        "height"
+      ],
+      "title": "ImageFileRef",
+      "type": "object"
+    },
+    "InteractionResolvedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "interaction.resolved",
+          "default": "interaction.resolved",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "InteractionResolvedEnvelope",
+      "type": "object"
+    },
+    "InteractionStatus": {
+      "description": "人工响应的生命周期状态。",
+      "enum": [
+        "pending",
+        "resolved",
+        "closed"
+      ],
+      "title": "InteractionStatus",
+      "type": "string"
+    },
+    "InteractionSuspendedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "interaction.suspended",
+          "default": "interaction.suspended",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "InteractionSuspendedEnvelope",
+      "type": "object"
+    },
+    "LineagePayload": {
+      "additionalProperties": false,
+      "description": "子任务固定归属。",
+      "properties": {
+        "lineage": {
+          "$ref": "#/$defs/RunLineage"
+        }
+      },
+      "required": [
+        "lineage"
+      ],
+      "title": "LineagePayload",
+      "type": "object"
+    },
+    "LiveCursor": {
+      "additionalProperties": false,
+      "description": "一个 epoch 内特定 scope 的 live replay cursor。",
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "after_live_sequence": {
+          "minimum": 0,
+          "title": "After Live Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "after_live_sequence"
+      ],
+      "title": "LiveCursor",
+      "type": "object"
+    },
+    "LiveError": {
+      "additionalProperties": false,
+      "description": "轻量运行错误。",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "title": "LiveError",
+      "type": "object"
+    },
+    "LiveScope": {
+      "enum": [
+        "run",
+        "session",
+        "session_tree",
+        "resource"
+      ],
+      "type": "string"
+    },
+    "LiveUsage": {
+      "additionalProperties": false,
+      "description": "模型实际报告的用量。",
+      "properties": {
+        "input_tokens": {
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "total_tokens": {
+          "title": "Total Tokens",
+          "type": "integer"
+        },
+        "complete": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Complete"
+        }
+      },
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "total_tokens"
+      ],
+      "title": "LiveUsage",
+      "type": "object"
+    },
+    "MaintenanceChangedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "maintenance.changed",
+          "default": "maintenance.changed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/MaintenancePayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "MaintenanceChangedEnvelope",
+      "type": "object"
+    },
+    "MaintenancePayload": {
+      "additionalProperties": false,
+      "description": "共享维护资源状态。",
+      "properties": {
+        "coordinator_id": {
+          "title": "Coordinator Id",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "integer"
+        },
+        "foreground_count": {
+          "title": "Foreground Count",
+          "type": "integer"
+        },
+        "resource": {
+          "$ref": "#/$defs/ResourceMaintenanceView"
+        }
+      },
+      "required": [
+        "coordinator_id",
+        "revision",
+        "foreground_count",
+        "resource"
+      ],
+      "title": "MaintenancePayload",
+      "type": "object"
+    },
+    "MaintenanceState": {
+      "enum": [
+        "idle",
+        "waiting_for_idle",
+        "waiting_for_materials",
+        "waiting_for_foreground",
+        "waiting_for_lock",
+        "running",
+        "closing"
+      ],
+      "type": "string"
+    },
+    "ModelBlock": {
+      "additionalProperties": false,
+      "description": "模型输出块身份。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "block_index": {
+          "title": "Block Index",
+          "type": "integer"
+        },
+        "block_id": {
+          "title": "Block Id",
+          "type": "string"
+        },
+        "block_kind": {
+          "title": "Block Kind",
+          "type": "string"
+        },
+        "tool_call_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Call Id"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "block_index",
+        "block_id",
+        "block_kind"
+      ],
+      "title": "ModelBlock",
+      "type": "object"
+    },
+    "ModelBlockCompletedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.block.completed",
+          "default": "model.block.completed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelBlock"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelBlockCompletedEnvelope",
+      "type": "object"
+    },
+    "ModelBlockDeltaEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.block.delta",
+          "default": "model.block.delta",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelDelta"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelBlockDeltaEnvelope",
+      "type": "object"
+    },
+    "ModelBlockStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.block.started",
+          "default": "model.block.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelBlock"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelBlockStartedEnvelope",
+      "type": "object"
+    },
+    "ModelCancelled": {
+      "additionalProperties": false,
+      "description": "模型取消。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LiveError"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "semantic_output_emitted": {
+          "title": "Semantic Output Emitted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "semantic_output_emitted"
+      ],
+      "title": "ModelCancelled",
+      "type": "object"
+    },
+    "ModelCompleted": {
+      "additionalProperties": false,
+      "description": "模型完成不代表 durable 消息提交。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "response_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Response Id"
+        },
+        "finish_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Finish Reason"
+        },
+        "usage": {
+          "$ref": "#/$defs/LiveUsage"
+        },
+        "semantic_output_emitted": {
+          "title": "Semantic Output Emitted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "provider",
+        "model",
+        "response_id",
+        "finish_reason",
+        "usage",
+        "semantic_output_emitted"
+      ],
+      "title": "ModelCompleted",
+      "type": "object"
+    },
+    "ModelDelta": {
+      "additionalProperties": false,
+      "description": "可合并快照；前端以 snapshot 覆盖。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "block_index": {
+          "title": "Block Index",
+          "type": "integer"
+        },
+        "block_id": {
+          "title": "Block Id",
+          "type": "string"
+        },
+        "block_kind": {
+          "title": "Block Kind",
+          "type": "string"
+        },
+        "tool_call_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Call Id"
+        },
+        "channel": {
+          "title": "Channel",
+          "type": "string"
+        },
+        "delta": {
+          "title": "Delta",
+          "type": "string"
+        },
+        "snapshot": {
+          "title": "Snapshot",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "block_index",
+        "block_id",
+        "block_kind",
+        "channel",
+        "delta",
+        "snapshot"
+      ],
+      "title": "ModelDelta",
+      "type": "object"
+    },
+    "ModelFailed": {
+      "additionalProperties": false,
+      "description": "模型流错误。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "error": {
+          "$ref": "#/$defs/LiveError"
+        },
+        "semantic_output_emitted": {
+          "title": "Semantic Output Emitted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "error",
+        "semantic_output_emitted"
+      ],
+      "title": "ModelFailed",
+      "type": "object"
+    },
+    "ModelResponseCancelledEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.response.cancelled",
+          "default": "model.response.cancelled",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelCancelled"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelResponseCancelledEnvelope",
+      "type": "object"
+    },
+    "ModelResponseCompletedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.response.completed",
+          "default": "model.response.completed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelCompleted"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelResponseCompletedEnvelope",
+      "type": "object"
+    },
+    "ModelResponseFailedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.response.failed",
+          "default": "model.response.failed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelFailed"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelResponseFailedEnvelope",
+      "type": "object"
+    },
+    "ModelResponseStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.response.started",
+          "default": "model.response.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelStarted"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelResponseStartedEnvelope",
+      "type": "object"
+    },
+    "ModelStarted": {
+      "additionalProperties": false,
+      "description": "模型响应开始。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "response_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Response Id"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "response_id"
+      ],
+      "title": "ModelStarted",
+      "type": "object"
+    },
+    "ModelStepCommittedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model_step.committed",
+          "default": "model_step.committed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelStepCommittedEnvelope",
+      "type": "object"
+    },
+    "ModelStepReservedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model_step.reserved",
+          "default": "model_step.reserved",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelStepReservedEnvelope",
+      "type": "object"
+    },
+    "ModelStepStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.step.started",
+          "default": "model.step.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/StepPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelStepStartedEnvelope",
+      "type": "object"
+    },
+    "ModelUsage": {
+      "additionalProperties": false,
+      "description": "实际用量更新。",
+      "properties": {
+        "model_stream_id": {
+          "title": "Model Stream Id",
+          "type": "string"
+        },
+        "provider_sequence": {
+          "title": "Provider Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "usage": {
+          "$ref": "#/$defs/LiveUsage"
+        }
+      },
+      "required": [
+        "model_stream_id",
+        "provider_sequence",
+        "occurred_at",
+        "usage"
+      ],
+      "title": "ModelUsage",
+      "type": "object"
+    },
+    "ModelUsageUpdatedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "model.usage.updated",
+          "default": "model.usage.updated",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ModelUsage"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ModelUsageUpdatedEnvelope",
+      "type": "object"
+    },
+    "PendingSubmission": {
+      "description": "尚未完成投递的进程内输入；块序列使用 tuple 保持只读。",
+      "properties": {
+        "submission_id": {
+          "title": "Submission Id",
+          "type": "string"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "steer",
+                "follow_up"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mode"
+        },
+        "input": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/TextBlock"
+                  },
+                  {
+                    "$ref": "#/$defs/ImageBlock"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Input"
+        },
+        "stage": {
+          "enum": [
+            "queued",
+            "committing",
+            "admitting"
+          ],
+          "title": "Stage",
+          "type": "string"
+        },
+        "submitted_at": {
+          "format": "date-time",
+          "title": "Submitted At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "submission_id",
+        "run_id",
+        "mode",
+        "input",
+        "stage",
+        "submitted_at"
+      ],
+      "title": "PendingSubmission",
+      "type": "object"
+    },
+    "PermissionInteractionResponse": {
+      "additionalProperties": false,
+      "description": "人工对权限请求的单次决定。",
+      "properties": {
+        "kind": {
+          "const": "permission",
+          "default": "permission",
+          "title": "Kind",
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "approve",
+            "reject"
+          ],
+          "title": "Decision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "decision"
+      ],
+      "title": "PermissionInteractionResponse",
+      "type": "object"
+    },
+    "PermissionPrompt": {
+      "additionalProperties": false,
+      "description": "向人展示的一次工具权限确认。",
+      "properties": {
+        "kind": {
+          "const": "permission",
+          "default": "permission",
+          "title": "Kind",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "title": "PermissionPrompt",
+      "type": "object"
+    },
+    "PreparationPayload": {
+      "additionalProperties": false,
+      "description": "准备退出时的摘要索引。",
+      "properties": {
+        "preparation_id": {
+          "title": "Preparation Id",
+          "type": "string"
+        },
+        "phase": {
+          "title": "Phase",
+          "type": "string"
+        },
+        "step_index": {
+          "title": "Step Index",
+          "type": "integer"
+        },
+        "configuration_snapshot_id": {
+          "title": "Configuration Snapshot Id",
+          "type": "string"
+        },
+        "stage_count": {
+          "title": "Stage Count",
+          "type": "integer"
+        },
+        "final_input_tokens": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Final Input Tokens"
+        }
+      },
+      "required": [
+        "preparation_id",
+        "phase",
+        "step_index",
+        "configuration_snapshot_id",
+        "stage_count",
+        "final_input_tokens"
+      ],
+      "title": "PreparationPayload",
+      "type": "object"
+    },
+    "QuestionInteractionResponse": {
+      "additionalProperties": false,
+      "description": "人工对问题请求的自由文本回答。",
+      "properties": {
+        "kind": {
+          "const": "question",
+          "default": "question",
+          "title": "Kind",
+          "type": "string"
+        },
+        "answer": {
+          "title": "Answer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "answer"
+      ],
+      "title": "QuestionInteractionResponse",
+      "type": "object"
+    },
+    "QuestionPrompt": {
+      "additionalProperties": false,
+      "description": "向人展示的一次信息问题。",
+      "properties": {
+        "kind": {
+          "const": "question",
+          "default": "question",
+          "title": "Kind",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Options",
+          "type": "array"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "title": "QuestionPrompt",
+      "type": "object"
+    },
+    "ReplayGap": {
+      "additionalProperties": false,
+      "description": "说明 live replay 或 delivery 出现需要 durable sync 的缺口。",
+      "properties": {
+        "kind": {
+          "const": "replay.gap",
+          "default": "replay.gap",
+          "title": "Kind",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReplayGapReason"
+        },
+        "requested_cursor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LiveCursor"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "current_epoch": {
+          "minLength": 1,
+          "title": "Current Epoch",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason",
+        "current_epoch"
+      ],
+      "title": "ReplayGap",
+      "type": "object"
+    },
+    "ReplayGapReason": {
+      "enum": [
+        "epoch_changed",
+        "cursor_expired",
+        "unknown_cursor",
+        "slow_consumer"
+      ],
+      "type": "string"
+    },
+    "ResourceMaintenanceView": {
+      "description": "一个 Memory 或 Evolution 资源的当前调度事实。",
+      "properties": {
+        "resource_ref": {
+          "title": "Resource Ref",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/MaintenanceState"
+        },
+        "pending_request_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pending Request Id"
+        },
+        "cycle_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cycle Id"
+        },
+        "next_eligible_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Next Eligible At"
+        },
+        "last_result_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Result Ref"
+        },
+        "pending_new_runs": {
+          "default": 0,
+          "title": "Pending New Runs",
+          "type": "integer"
+        },
+        "min_pending_runs": {
+          "default": 10,
+          "title": "Min Pending Runs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "resource_ref",
+        "state"
+      ],
+      "title": "ResourceMaintenanceView",
+      "type": "object"
+    },
+    "RunCancellationRequestedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "run.cancellation_requested",
+          "default": "run.cancellation_requested",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "RunCancellationRequestedEnvelope",
+      "type": "object"
+    },
+    "RunErrorInfo": {
+      "additionalProperties": false,
+      "description": "Logical run 对外返回的结构化错误。",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "config",
+            "context",
+            "provider",
+            "tool",
+            "memory",
+            "session",
+            "runtime",
+            "lifecycle",
+            "persistence"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "details": {
+          "additionalProperties": true,
+          "title": "Details",
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "source"
+      ],
+      "title": "RunErrorInfo",
+      "type": "object"
+    },
+    "RunLimits": {
+      "additionalProperties": false,
+      "description": "一次 logical run 的固定预算与截止约束。",
+      "properties": {
+        "max_model_steps": {
+          "default": 20,
+          "exclusiveMinimum": 0,
+          "title": "Max Model Steps",
+          "type": "integer"
+        },
+        "deadline_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Deadline At"
+        },
+        "interaction_timeout_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interaction Timeout Seconds"
+        }
+      },
+      "title": "RunLimits",
+      "type": "object"
+    },
+    "RunLineage": {
+      "description": "由持久 link 固定的根会话与父工具身份。",
+      "properties": {
+        "root_session_id": {
+          "title": "Root Session Id",
+          "type": "string"
+        },
+        "root_run_id": {
+          "title": "Root Run Id",
+          "type": "string"
+        },
+        "parent_run_id": {
+          "title": "Parent Run Id",
+          "type": "string"
+        },
+        "parent_tool_call_id": {
+          "title": "Parent Tool Call Id",
+          "type": "string"
+        },
+        "child_run_id": {
+          "title": "Child Run Id",
+          "type": "string"
+        },
+        "child_session_id": {
+          "title": "Child Session Id",
+          "type": "string"
+        },
+        "agent_selector": {
+          "title": "Agent Selector",
+          "type": "string"
+        }
+      },
+      "required": [
+        "root_session_id",
+        "root_run_id",
+        "parent_run_id",
+        "parent_tool_call_id",
+        "child_run_id",
+        "child_session_id",
+        "agent_selector"
+      ],
+      "title": "RunLineage",
+      "type": "object"
+    },
+    "RunPhase": {
+      "description": "Logical run 的外部可见阶段。",
+      "enum": [
+        "active",
+        "waiting",
+        "terminal"
+      ],
+      "title": "RunPhase",
+      "type": "string"
+    },
+    "RunSnapshot": {
+      "additionalProperties": false,
+      "description": "调用方可观察的 logical run 不可变快照。",
+      "properties": {
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "phase": {
+          "$ref": "#/$defs/RunPhase"
+        },
+        "stop_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunStopReason"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "current_activation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current Activation Id"
+        },
+        "pending_interaction_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pending Interaction Id"
+        },
+        "cancellation_requested_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cancellation Requested At"
+        },
+        "cancellation_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cancellation Reason"
+        },
+        "limits": {
+          "$ref": "#/$defs/RunLimits"
+        },
+        "usage": {
+          "$ref": "#/$defs/RunUsage"
+        },
+        "checkpoint_sequence": {
+          "minimum": 0,
+          "title": "Checkpoint Sequence",
+          "type": "integer"
+        },
+        "last_event_sequence": {
+          "minimum": 1,
+          "title": "Last Event Sequence",
+          "type": "integer"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        }
+      },
+      "required": [
+        "run_id",
+        "session_id",
+        "agent_id",
+        "phase",
+        "revision",
+        "limits",
+        "usage",
+        "checkpoint_sequence",
+        "last_event_sequence",
+        "created_at",
+        "started_at",
+        "updated_at"
+      ],
+      "title": "RunSnapshot",
+      "type": "object"
+    },
+    "RunStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "run.started",
+          "default": "run.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "RunStartedEnvelope",
+      "type": "object"
+    },
+    "RunStopReason": {
+      "description": "Terminal run 的稳定停止原因。",
+      "enum": [
+        "completed",
+        "failed",
+        "cancelled",
+        "deadline_exceeded",
+        "interaction_expired",
+        "budget_exhausted",
+        "outcome_unknown"
+      ],
+      "title": "RunStopReason",
+      "type": "string"
+    },
+    "RunTerminalEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "run.terminal",
+          "default": "run.terminal",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "RunTerminalEnvelope",
+      "type": "object"
+    },
+    "RunUsage": {
+      "additionalProperties": false,
+      "description": "Logical run 已持久化的预算和 token 计数。",
+      "properties": {
+        "model_steps_reserved": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Model Steps Reserved",
+          "type": "integer"
+        },
+        "model_steps_committed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Model Steps Committed",
+          "type": "integer"
+        },
+        "tool_calls_committed": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Tool Calls Committed",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "total_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Tokens",
+          "type": "integer"
+        },
+        "compaction": {
+          "$ref": "#/$defs/TokenUsage"
+        }
+      },
+      "title": "RunUsage",
+      "type": "object"
+    },
+    "RuntimeExecutionOptions": {
+      "additionalProperties": false,
+      "description": "每次 activation 固定使用的 runtime 行为选项。",
+      "properties": {
+        "include_tools": {
+          "default": true,
+          "title": "Include Tools",
+          "type": "boolean"
+        },
+        "request_options": {
+          "additionalProperties": true,
+          "title": "Request Options",
+          "type": "object"
+        },
+        "tool_timeout_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Timeout Seconds"
+        },
+        "tool_error_policy": {
+          "$ref": "#/$defs/ToolErrorPolicy",
+          "default": "return_to_model"
+        }
+      },
+      "title": "RuntimeExecutionOptions",
+      "type": "object"
+    },
+    "SessionControlChangedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "session.control.changed",
+          "default": "session.control.changed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ControlPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SessionControlChangedEnvelope",
+      "type": "object"
+    },
+    "SessionControlSnapshot": {
+      "description": "只读控制提示，revision 不参与 durable CAS。",
+      "properties": {
+        "manager_id": {
+          "title": "Manager Id",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "integer"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "current_run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current Run Id"
+        },
+        "run": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "driver_state": {
+          "default": "idle",
+          "enum": [
+            "idle",
+            "admitting",
+            "running",
+            "settling",
+            "detached",
+            "closed"
+          ],
+          "title": "Driver State",
+          "type": "string"
+        },
+        "pending": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PendingSubmission"
+          },
+          "title": "Pending",
+          "type": "array"
+        },
+        "allowed_commands": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Commands",
+          "type": "array"
+        },
+        "pending_scope": {
+          "const": "process_local",
+          "default": "process_local",
+          "title": "Pending Scope",
+          "type": "string"
+        },
+        "interaction_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InteractionStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "manager_id",
+        "revision",
+        "session_id"
+      ],
+      "title": "SessionControlSnapshot",
+      "type": "object"
+    },
+    "SourceAdoptedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "source.adopted",
+          "default": "source.adopted",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/SourcePayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SourceAdoptedEnvelope",
+      "type": "object"
+    },
+    "SourcePayload": {
+      "additionalProperties": false,
+      "description": "已采用来源的真实索引。",
+      "properties": {
+        "adoption_id": {
+          "title": "Adoption Id",
+          "type": "string"
+        },
+        "source_kind": {
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "owner_kind": {
+          "title": "Owner Kind",
+          "type": "string"
+        },
+        "adoption_boundary": {
+          "title": "Adoption Boundary",
+          "type": "string"
+        },
+        "step_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Step Index"
+        },
+        "preparation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Preparation Id"
+        },
+        "maintenance_cycle_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Maintenance Cycle Id"
+        },
+        "document_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Document Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "adoption_id",
+        "source_kind",
+        "owner_kind",
+        "adoption_boundary",
+        "step_index",
+        "preparation_id",
+        "maintenance_cycle_id",
+        "document_ids"
+      ],
+      "title": "SourcePayload",
+      "type": "object"
+    },
+    "StepPayload": {
+      "additionalProperties": false,
+      "description": "模型或压缩步骤通知。",
+      "properties": {
+        "step_index": {
+          "title": "Step Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "step_index"
+      ],
+      "title": "StepPayload",
+      "type": "object"
+    },
+    "StreamReady": {
+      "additionalProperties": false,
+      "description": "订阅已登记的首帧。",
+      "properties": {
+        "connection_id": {
+          "title": "Connection Id",
+          "type": "string"
+        },
+        "backend_epoch": {
+          "title": "Backend Epoch",
+          "type": "string"
+        },
+        "store_binding_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Store Binding Id"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Id"
+        },
+        "resource_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resource Id"
+        },
+        "stream_epoch": {
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "session_tree",
+            "resource"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "scope_id": {
+          "title": "Scope Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "connection_id",
+        "backend_epoch",
+        "store_binding_id",
+        "source_id",
+        "resource_id",
+        "stream_epoch",
+        "scope",
+        "scope_id"
+      ],
+      "title": "StreamReady",
+      "type": "object"
+    },
+    "SubagentExpiryOwner": {
+      "description": "Sub Agent proxy 最早到期期限的归属。",
+      "enum": [
+        "parent_run_deadline",
+        "parent_interaction_timeout",
+        "child_interaction_expiry",
+        "child_effective_deadline",
+        "outer_tool_timeout"
+      ],
+      "title": "SubagentExpiryOwner",
+      "type": "string"
+    },
+    "SubagentLinkedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "subagent.linked",
+          "default": "subagent.linked",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/LineagePayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SubagentLinkedEnvelope",
+      "type": "object"
+    },
+    "SubagentProxyOrigin": {
+      "additionalProperties": false,
+      "description": "Parent proxy 所对应的 exact child interaction 与期限归属。",
+      "properties": {
+        "child_run_id": {
+          "title": "Child Run Id",
+          "type": "string"
+        },
+        "child_interaction_id": {
+          "title": "Child Interaction Id",
+          "type": "string"
+        },
+        "agent_selector": {
+          "title": "Agent Selector",
+          "type": "string"
+        },
+        "expiry_owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SubagentExpiryOwner"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "child_run_id",
+        "child_interaction_id",
+        "agent_selector"
+      ],
+      "title": "SubagentProxyOrigin",
+      "type": "object"
+    },
+    "SubmissionDeliveredEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "submission.delivered",
+          "default": "submission.delivered",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/SubmissionPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SubmissionDeliveredEnvelope",
+      "type": "object"
+    },
+    "SubmissionFailedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "submission.failed",
+          "default": "submission.failed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/SubmissionPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SubmissionFailedEnvelope",
+      "type": "object"
+    },
+    "SubmissionPayload": {
+      "additionalProperties": false,
+      "description": "输入投递通知。",
+      "properties": {
+        "submission_id": {
+          "title": "Submission Id",
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mode"
+        },
+        "state": {
+          "title": "State",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "submission_id",
+        "mode",
+        "state"
+      ],
+      "title": "SubmissionPayload",
+      "type": "object"
+    },
+    "SubmissionPendingEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "submission.pending",
+          "default": "submission.pending",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/SubmissionPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "SubmissionPendingEnvelope",
+      "type": "object"
+    },
+    "SubscriptionTerminal": {
+      "additionalProperties": false,
+      "description": "结束单个 live subscription 的安全 control item。",
+      "properties": {
+        "kind": {
+          "const": "subscription.terminal",
+          "default": "subscription.terminal",
+          "title": "Kind",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/SubscriptionTerminalReason"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason",
+        "message"
+      ],
+      "title": "SubscriptionTerminal",
+      "type": "object"
+    },
+    "SubscriptionTerminalReason": {
+      "enum": [
+        "slow_consumer",
+        "broker_closed"
+      ],
+      "type": "string"
+    },
+    "TextBlock": {
+      "description": "用户或助手发送的纯文本内容。",
+      "properties": {
+        "type": {
+          "const": "text",
+          "default": "text",
+          "title": "Type",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "TextBlock",
+      "type": "object"
+    },
+    "TokenUsage": {
+      "additionalProperties": false,
+      "description": "Provider 返回的一组独立 token 计数。",
+      "properties": {
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "total_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Total Tokens",
+          "type": "integer"
+        }
+      },
+      "title": "TokenUsage",
+      "type": "object"
+    },
+    "ToolCallClaimedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool_call.claimed",
+          "default": "tool_call.claimed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolCallClaimedEnvelope",
+      "type": "object"
+    },
+    "ToolCallCommittedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool_call.committed",
+          "default": "tool_call.committed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolCallCommittedEnvelope",
+      "type": "object"
+    },
+    "ToolCallOutcomeUnknownEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool_call.outcome_unknown",
+          "default": "tool_call.outcome_unknown",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/DurableEventPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolCallOutcomeUnknownEnvelope",
+      "type": "object"
+    },
+    "ToolCallSnapshot": {
+      "additionalProperties": false,
+      "description": "触发人工 gate 的精确工具调用身份。",
+      "properties": {
+        "tool_call_id": {
+          "title": "Tool Call Id",
+          "type": "string"
+        },
+        "tool_name": {
+          "title": "Tool Name",
+          "type": "string"
+        },
+        "arguments": {
+          "additionalProperties": true,
+          "title": "Arguments",
+          "type": "object"
+        },
+        "workspace_root": {
+          "title": "Workspace Root",
+          "type": "string"
+        },
+        "fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fingerprint",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool_call_id",
+        "tool_name",
+        "arguments",
+        "workspace_root",
+        "fingerprint"
+      ],
+      "title": "ToolCallSnapshot",
+      "type": "object"
+    },
+    "ToolCompleted": {
+      "additionalProperties": false,
+      "description": "完整结果仍从 HTTP 读取。",
+      "properties": {
+        "tool_call_id": {
+          "title": "Tool Call Id",
+          "type": "string"
+        },
+        "tool_name": {
+          "title": "Tool Name",
+          "type": "string"
+        },
+        "tool_ordinal": {
+          "title": "Tool Ordinal",
+          "type": "integer"
+        },
+        "content": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Content",
+          "type": "array"
+        },
+        "is_error": {
+          "title": "Is Error",
+          "type": "boolean"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LiveError"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "artifact": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact"
+        },
+        "file_change": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Change"
+        }
+      },
+      "required": [
+        "tool_call_id",
+        "tool_name",
+        "tool_ordinal",
+        "content",
+        "is_error"
+      ],
+      "title": "ToolCompleted",
+      "type": "object"
+    },
+    "ToolCompletedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool.completed",
+          "default": "tool.completed",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ToolCompleted"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolCompletedEnvelope",
+      "type": "object"
+    },
+    "ToolErrorPolicy": {
+      "description": "工具错误进入下一模型步或立即停止的策略。",
+      "enum": [
+        "return_to_model",
+        "stop"
+      ],
+      "title": "ToolErrorPolicy",
+      "type": "string"
+    },
+    "ToolPayload": {
+      "additionalProperties": false,
+      "description": "工具执行摘要身份。",
+      "properties": {
+        "tool_call_id": {
+          "title": "Tool Call Id",
+          "type": "string"
+        },
+        "tool_name": {
+          "title": "Tool Name",
+          "type": "string"
+        },
+        "tool_ordinal": {
+          "title": "Tool Ordinal",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "tool_call_id",
+        "tool_name",
+        "tool_ordinal"
+      ],
+      "title": "ToolPayload",
+      "type": "object"
+    },
+    "ToolPreparingEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool.preparing",
+          "default": "tool.preparing",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ToolPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolPreparingEnvelope",
+      "type": "object"
+    },
+    "ToolStartedEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "stream_epoch": {
+          "minLength": 1,
+          "title": "Stream Epoch",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/LiveScope"
+        },
+        "scope_id": {
+          "minLength": 1,
+          "title": "Scope Id",
+          "type": "string"
+        },
+        "live_sequence": {
+          "minimum": 1,
+          "title": "Live Sequence",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "tool.started",
+          "default": "tool.started",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Session Id"
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activation Id"
+        },
+        "durable_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Durable Sequence"
+        },
+        "payload": {
+          "$ref": "#/$defs/ToolPayload"
+        },
+        "lineage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunLineage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "stream_epoch",
+        "scope",
+        "scope_id",
+        "live_sequence",
+        "payload"
+      ],
+      "title": "ToolStartedEnvelope",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/RunStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ActivationStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelStepReservedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelStepCommittedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ContextCompactedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolCallClaimedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolCallCommittedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolCallOutcomeUnknownEnvelope"
+    },
+    {
+      "$ref": "#/$defs/InteractionSuspendedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/InteractionResolvedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/RunCancellationRequestedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ActivationAbandonedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/RunTerminalEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SessionControlChangedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ConfigurationAppliedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ContextPreparationEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SourceAdoptedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SubagentLinkedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/GoalChangedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/MaintenanceChangedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/CommandCleanupFailedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelResponseStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelBlockStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelBlockDeltaEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelBlockCompletedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelUsageUpdatedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelResponseCompletedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelResponseFailedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelResponseCancelledEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ModelStepStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolPreparingEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ToolCompletedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ContextCompactionStartedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ContextCompactionCompletedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ContextCompactionFailedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SubmissionPendingEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SubmissionDeliveredEnvelope"
+    },
+    {
+      "$ref": "#/$defs/SubmissionFailedEnvelope"
+    },
+    {
+      "$ref": "#/$defs/ReplayGap"
+    },
+    {
+      "$ref": "#/$defs/SubscriptionTerminal"
+    },
+    {
+      "$ref": "#/$defs/StreamReady"
+    }
+  ],
+  "title": "StudioSse"
+}
