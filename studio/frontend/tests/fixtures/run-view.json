@@ -1,0 +1,45 @@
+{
+  "ref": {
+    "store_binding_id": "store_f744cff5504c4bb095ffcbd5f54b0f75",
+    "source_id": "28495e00-4ef8-4b39-a3cb-fc0ca8af5faa",
+    "run_id": "run_68e2228524c84c4f855b4d65d6ddbc28"
+  },
+  "result": null,
+  "tool_calls": [],
+  "run": {
+    "run_id": "run_68e2228524c84c4f855b4d65d6ddbc28",
+    "session_id": "session_149286d9ed594c90bc9a5ef37d65d7b6",
+    "agent_id": "studio-acceptance",
+    "phase": "terminal",
+    "stop_reason": "completed",
+    "revision": 23,
+    "current_activation_id": null,
+    "pending_interaction_id": null,
+    "cancellation_requested_at": null,
+    "cancellation_reason": null,
+    "limits": {
+      "max_model_steps": 20,
+      "deadline_at": null,
+      "interaction_timeout_seconds": null
+    },
+    "usage": {
+      "model_steps_reserved": 5,
+      "model_steps_committed": 5,
+      "tool_calls_committed": 4,
+      "input_tokens": 11656,
+      "output_tokens": 661,
+      "total_tokens": 12317,
+      "compaction": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "checkpoint_sequence": 13,
+    "last_event_sequence": 23,
+    "created_at": "2026-10-08T12:23:12.835449Z",
+    "started_at": "2026-10-08T12:23:12.835449Z",
+    "updated_at": "2026-10-08T12:25:55.575743Z",
+    "finished_at": "2026-10-08T12:25:55.575743Z"
+  }
+}

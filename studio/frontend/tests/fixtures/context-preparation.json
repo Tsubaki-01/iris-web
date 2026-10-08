@@ -1,0 +1,189 @@
+{
+  "preparation_id": "preparation_96f0591bf029437ba1c1b6217f33897e",
+  "configuration_snapshot_id": "configuration_d2f53ed06f124751acb2f39f1138590a",
+  "session_id": "session_149286d9ed594c90bc9a5ef37d65d7b6",
+  "run_id": "run_68e2228524c84c4f855b4d65d6ddbc28",
+  "activation_id": "act_aab32655003e43e3ba6094f91ab1b434",
+  "step_index": 4,
+  "phase": "ready",
+  "input_budget_tokens": 96000,
+  "trigger_tokens": 76800,
+  "stages": [
+    {
+      "index": 0,
+      "kind": "assemble",
+      "outcome": "applied",
+      "before_input_tokens": null,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "tool",
+          "subject_ref": "list_files",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "read_file",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "write_file",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "publish_artifact",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "ask_question",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "context_read",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        },
+        {
+          "subject_kind": "tool",
+          "subject_ref": "context_search",
+          "action": "retained",
+          "reason_code": "required_tool",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 1,
+      "kind": "deduplicate",
+      "outcome": "skipped",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "request",
+          "subject_ref": "input",
+          "action": "unchanged",
+          "reason_code": "below_pressure",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 2,
+      "kind": "optional_context",
+      "outcome": "skipped",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "request",
+          "subject_ref": "input",
+          "action": "unchanged",
+          "reason_code": "below_pressure",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 3,
+      "kind": "optional_tools",
+      "outcome": "skipped",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "request",
+          "subject_ref": "input",
+          "action": "unchanged",
+          "reason_code": "below_pressure",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 4,
+      "kind": "preview",
+      "outcome": "skipped",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "request",
+          "subject_ref": "input",
+          "action": "unchanged",
+          "reason_code": "below_pressure",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 5,
+      "kind": "compaction",
+      "outcome": "skipped",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [
+        {
+          "subject_kind": "request",
+          "subject_ref": "input",
+          "action": "unchanged",
+          "reason_code": "below_pressure",
+          "related_ref": null
+        }
+      ],
+      "compaction_ref": null
+    },
+    {
+      "index": 6,
+      "kind": "final",
+      "outcome": "applied",
+      "before_input_tokens": 1618,
+      "after_input_tokens": 1618,
+      "decisions": [],
+      "compaction_ref": null
+    }
+  ],
+  "selected_tool_names": [
+    "list_files",
+    "read_file",
+    "write_file",
+    "publish_artifact",
+    "ask_question",
+    "context_read",
+    "context_search"
+  ],
+  "selected_contribution_keys": [],
+  "protected_refs": [
+    "message:0",
+    "tool:list_files",
+    "tool:read_file",
+    "tool:write_file",
+    "tool:publish_artifact",
+    "tool:ask_question",
+    "tool:context_read",
+    "tool:context_search"
+  ],
+  "final_input_tokens": 1618,
+  "final_request_ref": null,
+  "error": null
+}
