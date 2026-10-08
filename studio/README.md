@@ -17,7 +17,7 @@ parent/
       frontend/
 ```
 
-当前集成基线为 Iris `c8a2185ba96753f0ff5a0dbb3eaeae0264ef78fe`，包含生成作业排空修复。相邻 Iris checkout 应包含此提交；安装的是这个源码项目，不是公共包仓库里的同名包。
+当前集成基线为 Iris `a32e57579e4fb909ed49f8ec9bf1e0c20038822e`，包含生成作业排空修复。相邻 Iris checkout 应包含此提交；安装的是这个源码项目，不是公共包仓库里的同名包。
 
 在 `studio/backend` 安装后端依赖并导出契约：
 

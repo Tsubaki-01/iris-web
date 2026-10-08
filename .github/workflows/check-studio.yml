@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: Tsubaki-01/Iris
-          ref: c8a2185ba96753f0ff5a0dbb3eaeae0264ef78fe
+          ref: a32e57579e4fb909ed49f8ec9bf1e0c20038822e
           path: Iris
       - uses: actions/setup-node@v6
         with:
