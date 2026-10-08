@@ -1,0 +1,50 @@
+name: Check website
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package*.json'
+      - 'tsconfig.json'
+      - 'playwright.config.ts'
+      - '.node-version'
+      - '.github/workflows/check-site.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+        with:
+          repository: Tsubaki-01/Iris
+          ref: master
+          path: .cache/iris
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run content:prepare -- --source .cache/iris
+      - run: npm run test:content
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-preview
+          path: |
+            site/.vitepress/dist
+            output/playwright
+          if-no-files-found: ignore

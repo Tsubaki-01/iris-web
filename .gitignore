@@ -1,0 +1,10 @@
+node_modules/
+.cache/
+site/docs/
+site/.generated/
+site/.vitepress/cache/
+site/.vitepress/dist/
+playwright-report/
+test-results/
+output/
+/index.html
