@@ -1,12 +1,29 @@
-# Iris 官网与文档网站
+# Iris Web
 
-VitePress 网站工程位于 `site/`，首页沿用 Iris 的植物学视觉设计，文档直接读取 [Iris](https://github.com/Tsubaki-01/Iris) 仓库中的 Markdown。正式站点通过 GitHub Pages 发布，正文对应 GitHub latest 正式 Release。
+[Iris](https://github.com/Tsubaki-01/Iris) 的官网、文档网站与本地 Agent 工作台。
 
-[访问官网](https://tsubaki-01.github.io/iris-web/) · [快速开始](https://tsubaki-01.github.io/iris-web/docs/getting-started/quickstart.html)
+[访问官网](https://tsubaki-01.github.io/iris-web/) · [Iris 快速开始](https://tsubaki-01.github.io/iris-web/docs/getting-started/quickstart.html) · [启动 Iris Studio](studio/README.md)
 
-## 本地开发
+本仓库包含两个独立应用：
 
-使用 `.node-version` 指定的 Node 24。将 Iris 仓库放在相邻目录，其文档需要包含 `docs/navigation.json` 和快速开始中的首页代码标记。
+| 应用 | 目录 | 用途 |
+| --- | --- | --- |
+| 官网与文档 | `site/` | 使用 VitePress 构建，通过 GitHub Pages 发布；文档来自 Iris 正式 Release |
+| Iris Studio | `studio/` | 使用 React 前端与 Python 后端，在本地配置 Agent、运行任务并查看运行记录 |
+
+以下命令均在仓库根目录执行，用于官网开发。工作台的安装与使用见 [Studio README](studio/README.md)。
+
+## 本地运行官网
+
+使用 [`.node-version`](.node-version) 指定的 Node 24，并将 Iris 源码仓库放在相邻目录：
+
+```text
+parent/
+  Iris/
+  iris-web/
+```
+
+安装依赖、导入文档并启动开发服务器：
 
 ```shell
 npm ci
@@ -14,54 +31,68 @@ npm run content:prepare -- --source ../Iris
 npm run dev
 ```
 
-打开命令输出中的 `/iris-web/` 地址。开发预览包含指定 Iris 工作区的文档修改；改正文后再次运行 `content:prepare`，开发服务器会采用更新后的生成文件。
+打开终端输出中的 `/iris-web/` 地址。`--source` 可以指向其他 Iris 工作区；源文档需包含 `docs/navigation.json`，以及快速开始中的 `iris-web` 首页代码标记。
+
+修改 Iris 文档后，重新运行 `npm run content:prepare -- --source ../Iris` 即可更新本地预览。修改网站主题或页面时，开发服务器会自动更新。
+
+构建并预览静态网站：
 
 ```shell
-npm run content:prepare -- --source ../Iris
-npm run test:content
-npm run typecheck
 npm run build
 npm run preview
 ```
 
-浏览器验收使用静态构建：
+## 维护内容与主题
+
+文档正文统一在 Iris 仓库维护，本仓库负责网站展示和发布。
+
+| 修改内容 | 维护位置 |
+| --- | --- |
+| 正文、图表、文档图片 | Iris 仓库的 `docs/` |
+| 文档分组与排序 | Iris 仓库的 `docs/navigation.json` |
+| 首页安装命令、最小 YAML、运行命令 | Iris 快速开始中的具名代码区域 |
+| 首页布局与文档主题 | 本仓库的 `site/` |
+| 文档导入与链接转换 | 本仓库的 `scripts/` 与 `site/.vitepress/` |
+
+`site/docs/` 和 `site/.generated/` 由导入命令生成，请勿手工编辑或提交；再次导入会替换其中的内容。站内文档链接保留原有层级，源码与示例链接指向构建所用的 Iris 提交。
+
+## 发布官网
+
+官网通过 [部署工作流](.github/workflows/deploy-pages.yml) 发布到 GitHub Pages，以下事件会触发部署：
+
+- `master` 分支上的网站工程或文档修订配置发生变更。
+- 收到 Iris 的 `iris-release` 发版通知。
+- 手动运行工作流。
+
+每次部署读取 Iris 的 latest 正式 Release，以对应标签的内容构建首页和文档。若 [文档修订配置](.github/docs-revisions.json) 为该版本指定了提交，则使用修订提交并保留版本号。页面中的源码链接指向实际构建提交。
+
+普通 Iris 文档合并不会更新线上版本；没有正式 Release 时跳过部署，构建失败时保留上一次成功发布的网站。
+
+### 部署配置
+
+在 iris-web 仓库的 Pages 设置中选择 **GitHub Actions**。在 Iris 仓库配置 `IRIS_WEB_DISPATCH_TOKEN`，使用可访问 iris-web 且具有 **Contents: write** 权限的 fine-grained PAT，供发版工作流发送通知。网站路径为 `/iris-web/`。
+
+发版通知失败、预发布转为正式版本，或手动更换 latest 指向后，可以手动运行部署工作流更新网站。
+
+### 同版本文档勘误
+
+从对应 Release 标签创建修订分支，提交文档修正，再将版本号与修订提交的映射写入 [`.github/docs-revisions.json`](.github/docs-revisions.json)。该配置合并到 `master` 后会触发重新部署。
+
+## 开发检查
+
+导入文档后，运行内容测试与类型检查：
 
 ```shell
+npm run test:content
+npm run typecheck
+```
+
+浏览器测试使用静态构建：
+
+```shell
+npm run build
 npx playwright install chromium
 npm run test:browser
 ```
 
-截图保存在 `output/playwright/`。修改链接或导入脚本时运行内容测试；修改页面交互时运行相关浏览器用例。普通文字或样式小改不要求运行所有测试。
-
-## 内容与主题的边界
-
-- 正文、图表与文档图片在 Iris/docs 维护；分组与排序在同仓库的 `navigation.json` 维护。
-- 首页的安装、最小 YAML 和运行命令从快速开始中的具名区域提取。
-- 主题、首页表现、源码链接转换和构建流程在本仓库维护。
-- `site/docs/` 与 `site/.generated/` 是构建输入，不能人工编辑或提交；再次导入会替换旧内容。
-- 站内链接保留文档层级；指向源码、测试或 examples 的链接转到同版 GitHub 提交。页面显示发布版本或“开发预览”。
-
-## 发布
-
-`check-site.yml` 对网站 PR 使用 Iris/master 生成开发预览并检查主要流程，不部署。
-
-`deploy-pages.yml` 在网站 master 的工程变更、Iris 发版通知或手动运行时，解析 latest 正式 Release，检出该标签并固定提交，构建后发布 Pages。若 `.github/docs-revisions.json` 为该版本指定了文档修订提交，则检出该提交，保留原版本号。无正式 Release 时明确跳过部署，普通 Iris 文档合并不会更新线上版本。
-
-同版本文档勘误从对应 Release 标签创建修订分支，只提交文档修正，再将提交填入 `.github/docs-revisions.json` 并重建。首页、正文与复制内容仍从同一套文档生成，源码链接对应实际构建提交。
-
-首次上线需要：
-
-1. 将 Iris 导航与文档接入改动合并到维护分支。安装命令统一使用 `git clone https://github.com/Tsubaki-01/Iris.git`。
-2. 将网站工程推送到公开的 iris-web 仓库，在 Pages 中选择 GitHub Actions。
-3. 在 Iris 配置 `IRIS_WEB_DISPATCH_TOKEN`，使用可访问 iris-web 且具备 Contents write 的 fine-grained PAT；Iris 的发版工作流用它发送通知。
-4. 发布正式 Release 并设为 latest，检查 Actions 与线上页面。项目路径为 `/iris-web/`，实际地址以 Pages 返回值为准。
-
-构建失败时线上保持上一个成功版本。通知或发布失败可重跑；预发布转正式、手动更换 latest 指向后，可手动运行部署工作流。首页样式更新仍使用正式版本正文。
-
-## 本地设计工作台
-
-根 `index.html` 和 `output/` 保留为本地设计资料，不进入网站构建与公开提交。原始工作台说明保存在本地 `output/design-workbench-readme.md`，从根目录 `index.html` 打开图库。
-
-## Iris Studio 工作台
-
-实际 Agent 工作台位于 [studio/](studio/README.md)，使用独立 React 前端与 Python 宿主。启动、配置、真实观察与只读展示包见该目录说明；本仓库根命令仍服务官网。
+[网站检查工作流](.github/workflows/check-site.yml) 在网站相关 PR 中读取 Iris 的 `master` 分支，执行检查并保存预览产物。正式发布使用上面的部署工作流。
